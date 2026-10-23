@@ -21,6 +21,7 @@ import { clipboardPasteAction, pasteMenuItem, pasteTarget, readClipboard } from 
 import { ScopeChip } from "./omnibox/ScopeChip";
 import { SuggestionIcon, SuggestionList, isRemovable, type RowActions } from "./omnibox/SuggestionRow";
 import { useDropdownStart } from "./omnibox/dropdownStart";
+import { editOfReplacedText, fieldForHighlightedRow } from "./omnibox/highlightedRow";
 import { useInlineCompletion } from "./omnibox/useInlineCompletion";
 import { keywordScope, offeredScope, useSuggestions } from "./omnibox/useSuggestions";
 import { setPopover } from "./layout/pageState";
@@ -114,14 +115,17 @@ export function Omnibox({
   });
   const start = useDropdownStart(dropdown && !edited && !scope, tabId, profileId);
   const items = dropdown && !edited && !scope ? start : suggested;
-  const inline = useInlineCompletion(input, typed, suppressCompletion || scope ? "" : completion);
-  const shownCompletion = inline.shown;
-  const value = typed + shownCompletion;
   const selectedIndex = Math.min(selected, items.length - 1);
   const current = items[selectedIndex];
+  const highlighted = selectedIndex > 0 ? fieldForHighlightedRow(typed, current) : null;
+  const replaced = highlighted && "replace" in highlighted ? highlighted.replace : null;
+  const wantedCompletion = highlighted ? ("completion" in highlighted ? highlighted.completion : null) : suppressCompletion || scope ? "" : completion;
+  const inline = useInlineCompletion(input, typed, wantedCompletion);
+  const shownCompletion = replaced === null ? inline.shown : "";
+  const value = replaced ?? typed + shownCompletion;
   const tabScope = useMemo(
-    () => (!scope && edited ? offeredScope(typed, shownCompletion, windowId) : null),
-    [scope, edited, typed, shownCompletion, windowId],
+    () => (!scope && edited && selectedIndex <= 0 ? offeredScope(typed, shownCompletion, windowId) : null),
+    [scope, edited, selectedIndex, typed, shownCompletion, windowId],
   );
 
   const snapshot = useRef<BarSnapshot | null>(null);
@@ -157,6 +161,14 @@ export function Omnibox({
     setPendingSelection(null);
     if (editing.current) claimFocusTag(windowId, hero ? heroBarFocus(tabId) : commandBarFocus, () => findNodeHandle(input.current));
   }, [pendingSelection]);
+
+  const showsReplaced = useRef(false);
+  useLayoutEffect(() => {
+    if (replaced === null && !showsReplaced.current) return;
+    showsReplaced.current = replaced !== null;
+    const end = (replaced ?? typed).length;
+    setPendingSelection({ start: end, end });
+  }, [replaced]);
 
   const reset = () => {
     bangEnter.cancel();
@@ -258,6 +270,7 @@ export function Omnibox({
     if (key === "Escape") {
       if (scope) return leaveScope(null);
       if (!hero) return onDone?.("escape");
+      if (selectedIndex > 0) return setSelected(0);
       if (shownCompletion) return setSuppressCompletion(true);
       return reset();
     }
@@ -272,6 +285,8 @@ export function Omnibox({
       if (action?.kind === "leave") return leaveScope(action.text);
       if (action?.kind === "accept") {
         setTyped(action.text);
+        setEdited(true);
+        setSelected(0);
         setSuppressCompletion(true);
         setPendingSelection({ start: action.text.length, end: action.text.length });
         return;
@@ -332,16 +347,17 @@ export function Omnibox({
   const onChangeText = (next: string) => {
     if (__DEV__) heardAt.current = Date.now();
     const fresh = Date.now() - selectionAt.current < 100;
-    const change = inline.read(next, { before: fresh ? selectionBefore.current : selection.current, after: selection.current });
-    if (change.echo) {
-      if (!change.stale) noteSelection({ start: change.inline.typed.length, end: next.length });
+    const read = inline.read(next, { before: fresh ? selectionBefore.current : selection.current, after: selection.current });
+    if (read.echo) {
+      if (!read.stale && replaced === null) noteSelection({ start: read.inline.typed.length, end: next.length });
       return;
     }
+    const change = replaced === null ? read : editOfReplacedText(replaced, next);
     bangEnter.cancel();
     focusEcho.current = false;
     keyAt.current = Date.now();
     journeyKeystroke(tabId);
-    const bySpace = scope ? null : keywordBySpace(typed, next);
+    const bySpace = scope ? null : keywordBySpace(replaced ?? typed, next);
     const keyword = bySpace ? keywordScope(bySpace.keyword, windowId) : null;
     if (bySpace && keyword) return enterScope(keyword, bySpace.from);
     setEdited(true);
@@ -397,7 +413,7 @@ export function Omnibox({
           focusEcho.current = false;
         }
         noteSelection(next);
-        if (inline.accepts(next)) {
+        if (replaced === null && inline.accepts(next)) {
           setTyped(value);
           setSuppressCompletion(true);
           setSelected(0);

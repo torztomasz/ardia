@@ -3,10 +3,14 @@ import { useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { findNodeHandle, type TextInput } from "react-native";
 import { acceptsCompletion, completionToWrite, fieldChange, withoutFirst, type EditContext, type FieldChange, type Inline, type PendingInline, type Selection } from "./inline";
 
-export function useInlineCompletion(input: RefObject<TextInput | null>, typed: string, wanted: string) {
+const MAX_REFUSALS = 3;
+
+export function useInlineCompletion(input: RefObject<TextInput | null>, typed: string, wanted: string | null) {
   const [inline, setInline] = useState<Inline | null>(null);
   const pending = useRef<PendingInline[]>([]);
   const heard = useRef(typed);
+  const refusals = useRef({ of: "", count: 0 });
+  const [retry, setRetry] = useState(0);
   const shown = inline?.typed === typed ? inline.completion : "";
 
   useLayoutEffect(() => {
@@ -14,6 +18,12 @@ export function useInlineCompletion(input: RefObject<TextInput | null>, typed: s
       heard.current = typed;
       pending.current = pending.current.map((p) => ({ ...p, orphaned: true }));
     }
+    if (wanted === null) {
+      setInline(null);
+      return;
+    }
+    const of = `${typed}\n${wanted}`;
+    if (refusals.current.of !== of) refusals.current = { of, count: 0 };
     const write = completionToWrite(typed, wanted, shown, pending.current);
     const tag = write && findNodeHandle(input.current);
     if (!write || tag == null) return;
@@ -22,9 +32,13 @@ export function useInlineCompletion(input: RefObject<TextInput | null>, typed: s
       if (result === 2) return;
       pending.current = withoutFirst(pending.current, write);
       if (result === 1) setInline(write);
+      if (result === 0 && refusals.current.count < MAX_REFUSALS) {
+        refusals.current.count++;
+        requestAnimationFrame(() => setRetry((n) => n + 1));
+      }
     };
     completeInline(tag, write.typed, write.completion).then(settle, () => settle(0));
-  }, [input, typed, wanted, shown]);
+  }, [input, typed, wanted, shown, retry]);
 
   const read = (next: string, edit?: EditContext): FieldChange => {
     const change = fieldChange(typed, shown, next, pending.current, edit);
