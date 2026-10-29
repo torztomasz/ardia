@@ -1,0 +1,41 @@
+{
+  "kind": "close-outside",
+  "variant": "current",
+  "tDown": 1793282420277,
+  "tDownDone": 1793282420279,
+  "tUp": 1793282420359,
+  "tUpDone": 1793282420360,
+  "mount": null,
+  "unmount": 66,
+  "hoverAtDown": null,
+  "shown": "a",
+  "open": false,
+  "panel": {
+    "x": 6,
+    "y": 101,
+    "w": 178,
+    "h": 181
+  },
+  "tile": {
+    "x": 128,
+    "y": 54,
+    "w": 55,
+    "h": 41
+  },
+  "sidebar": {
+    "x": 0,
+    "y": 0,
+    "w": 190,
+    "h": 800
+  },
+  "empty": [
+    95,
+    392
+  ],
+  "crop": [
+    0,
+    0,
+    520,
+    600
+  ]
+}

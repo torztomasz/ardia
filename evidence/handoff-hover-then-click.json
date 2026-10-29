@@ -1,0 +1,347 @@
+{
+  "baseline": {
+    "downMs": -82,
+    "rows": [
+      {
+        "ms": -136.6,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -120.0,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -111.6,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -86.6,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -74.1,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -61.6,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -49.1,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -36.6,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -28.3,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -20.0,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -11.6,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": 5.0,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": 13.4,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": 38.4,
+        "peekVisible": 0.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": 55.0,
+        "peekVisible": 0.0,
+        "panelVisible": 0.35
+      },
+      {
+        "ms": 63.4,
+        "peekVisible": 0.0,
+        "panelVisible": 0.35
+      },
+      {
+        "ms": 88.4,
+        "peekVisible": 0.0,
+        "panelVisible": 0.78
+      },
+      {
+        "ms": 96.7,
+        "peekVisible": 0.0,
+        "panelVisible": 0.92
+      },
+      {
+        "ms": 105.0,
+        "peekVisible": 0.0,
+        "panelVisible": 0.96
+      },
+      {
+        "ms": 121.7,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 196.7,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 255.0,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      }
+    ]
+  },
+  "current": {
+    "downMs": -83,
+    "rows": [
+      {
+        "ms": -129.1,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -112.4,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -95.7,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -79.1,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -54.1,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -45.7,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -20.7,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -12.4,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": -4.1,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": 4.3,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": 20.9,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": 29.3,
+        "peekVisible": 1.0,
+        "panelVisible": 0.0
+      },
+      {
+        "ms": 70.9,
+        "peekVisible": 0.84,
+        "panelVisible": 0.15
+      },
+      {
+        "ms": 79.3,
+        "peekVisible": 0.7,
+        "panelVisible": 0.29
+      },
+      {
+        "ms": 87.6,
+        "peekVisible": 0.55,
+        "panelVisible": 0.44
+      },
+      {
+        "ms": 104.3,
+        "peekVisible": 0.32,
+        "panelVisible": 0.65
+      },
+      {
+        "ms": 112.6,
+        "peekVisible": 0.22,
+        "panelVisible": 0.75
+      },
+      {
+        "ms": 120.9,
+        "peekVisible": 0.17,
+        "panelVisible": 0.8
+      },
+      {
+        "ms": 137.6,
+        "peekVisible": 0.07,
+        "panelVisible": 0.9
+      },
+      {
+        "ms": 145.9,
+        "peekVisible": 0.03,
+        "panelVisible": 0.94
+      },
+      {
+        "ms": 154.3,
+        "peekVisible": 0.02,
+        "panelVisible": 0.95
+      },
+      {
+        "ms": 162.6,
+        "peekVisible": 0.0,
+        "panelVisible": 0.98
+      },
+      {
+        "ms": 170.9,
+        "peekVisible": 0.0,
+        "panelVisible": 0.98
+      },
+      {
+        "ms": 187.6,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 195.9,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 204.3,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 212.6,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 220.9,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 229.3,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 237.6,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 254.3,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 262.6,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 270.9,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 287.6,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 295.9,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 304.3,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 312.6,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 320.9,
+        "peekVisible": 0.0,
+        "panelVisible": 0.99
+      },
+      {
+        "ms": 329.3,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 345.9,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 354.3,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 362.6,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 370.9,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 379.3,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      },
+      {
+        "ms": 395.9,
+        "peekVisible": 0.0,
+        "panelVisible": 1.0
+      }
+    ]
+  }
+}

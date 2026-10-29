@@ -1,0 +1,41 @@
+{
+  "kind": "hover-then-click",
+  "variant": "baseline",
+  "tDown": 1793282815768,
+  "tDownDone": 1793282815768,
+  "tUp": 1793282815851,
+  "tUpDone": 1793282815852,
+  "mount": 32,
+  "unmount": null,
+  "hoverAtDown": "folder",
+  "shown": "a",
+  "open": true,
+  "panel": {
+    "x": 6,
+    "y": 101,
+    "w": 178,
+    "h": 181
+  },
+  "tile": {
+    "x": 128,
+    "y": 54,
+    "w": 55,
+    "h": 41
+  },
+  "sidebar": {
+    "x": 0,
+    "y": 0,
+    "w": 190,
+    "h": 800
+  },
+  "empty": [
+    95,
+    392
+  ],
+  "crop": [
+    0,
+    0,
+    520,
+    600
+  ]
+}
