@@ -321,11 +321,12 @@
     proto.setPositionState = function (state) {
       const result = setPositionState.apply(this, arguments);
       const media = reachableMedia();
-      timeline = typeof state?.duration === "number" ? { position: state.position ?? 0, duration: state.duration, playbackRate: state.playbackRate ?? 1, mediaTimes: mediaTimesOf(media), started: [...media, ...playingMedia].some(isPlaying) } : null;
+      timeline = typeof state?.duration === "number" ? { position: state.position ?? 0, duration: state.duration, playbackRate: state.playbackRate ?? 1, mediaTimes: mediaTimesOf(media) } : null;
       positionState = timeline ? state : null;
       if (timeline) {
-        restartTimelineClock(timeline.position);
         const reported = timeline;
+        reported.started = [...media, ...playingMedia].some((m) => isPlaying(m) && !incidentalSound(m, reported));
+        restartTimelineClock(timeline.position);
         queueMicrotask(guard(() => timeline === reported && (reported.mediaTimes = mediaTimesOf(reachableMedia()))));
       }
       reportNowPlaying();
@@ -358,7 +359,7 @@
     const started = timeline.started;
     timeline.started = true;
     const followedAdvance = followed === m ? null : mediaAdvanceOf(followed, timeline);
-    if (timeline.mediaTimes.has(m) && followedAdvance == null) return null;
+    if (timeline.mediaTimes.has(m) && (followedAdvance == null || isPlaying(followed))) return null;
     const position = started ? timelineNow(timeline, followedAdvance, now).position : timeline.position;
     timeline.mediaTimes.set(m, m.currentTime - (position - timeline.position));
     return position;

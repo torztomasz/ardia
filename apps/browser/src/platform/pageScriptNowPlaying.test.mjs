@@ -13,7 +13,7 @@ const timelineNow = define("timelineNow", /const timelineNow = (\(reported, medi
 const oneShot = define("oneShot", /const oneShot = (\(m\) => .*);\n/);
 const incidentalSound = define("incidentalSound", /const incidentalSound = (\(m, timeline\) => .*);\n/, { oneShot });
 const mediaAdvanceOf = define("mediaAdvanceOf", /const mediaAdvanceOf = (\(el, timeline\) => .*);\n/, { incidentalSound });
-const anchorStartedMedia = define("anchorStartedMedia", /const anchorStartedMedia = (\(timeline, m, followed, now\) => \{[\s\S]*?\n {2}\});\n/, { incidentalSound, timelineNow, mediaAdvanceOf });
+const anchorStartedMedia = define("anchorStartedMedia", /const anchorStartedMedia = (\(timeline, m, followed, now\) => \{[\s\S]*?\n {2}\});\n/, { incidentalSound, isPlaying: (m) => !m.paused && !m.ended, timelineNow, mediaAdvanceOf });
 const timelineReport = define("timelineReport", /const timelineReport = (\(timeline, el, now\) => \{[\s\S]*?\n {2}\});\n/, { mediaAdvanceOf, timelineNow });
 
 const video = (currentTime, playbackRate = 1) => ({ currentTime, playbackRate });
@@ -85,6 +85,7 @@ test("a preloaded track the site's position was set over still takes over from w
   const timeline = setAt(30, { media: [[first, 0], [next, 0]] });
   assert.equal(anchorStartedMedia(timeline, first, null, 0), null, "the first one keeps the anchor it was set with");
   first.currentTime = 20;
+  first.paused = true;
   assert.equal(anchorStartedMedia(timeline, next, first, 20_000), 50);
   next.currentTime = 1;
   assert.equal(timelineReport(timeline, next, 21_000).position, 51);
@@ -106,4 +107,15 @@ test("a short clip that is the site's own media stays on its timeline", () => {
   const timeline = { ...setAt(0, { playing: false, media: [[clip, 0]] }), duration: 4 };
   clip.currentTime = 3;
   assert.equal(timelineReport(timeline, clip, 0).position, 3, "a seek in the clip moves the card");
+});
+
+test("a video resumed beside one still playing keeps its own anchor instead of taking over the other's time", () => {
+  const playing = video(0), inPip = { ...video(20), paused: true };
+  const timeline = setAt(0, { media: [[playing, 0], [inPip, 20]] });
+  timeline.started = true;
+  playing.currentTime = 30;
+  inPip.currentTime = 30;
+  inPip.paused = false;
+  assert.equal(anchorStartedMedia(timeline, inPip, playing, 30_000), null);
+  assert.equal(timelineReport(timeline, inPip, 30_000).position, 10);
 });
